@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Rush Gus - Adventure Awaits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 50%, #1a2f1a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FFD700;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23228B22" width="1200" height="800"/><path fill="%23006400" d="M0,200 Q300,100 600,200 T1200,200 V800 H0 Z"/><circle fill="%23FFD700" cx="200" cy="150" r="80" opacity="0.3"/><circle fill="%23FF4500" cx="800" cy="300" r="60" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #FFD700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #FF6B35, #FF4500);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255,107,53,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: rgba(0,0,0,0.8);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, #2d5a2d, #1a2f1a);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: #FFD700;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2em;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 60px;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,215,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.2);
+        }
+
+        .feature-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .feature-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        .feature-description {
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        /* How to Play Section */
+        .how-to-play {
+            padding: 100px 0;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .step {
+            background: linear-gradient(145deg, #2d5a2d, #1a2f1a);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: #FFD700;
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .step-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1a2f1a 0%, #2d5a2d 100%);
+        }
+
+        .faq-item {
+            background: rgba(255,215,0,0.1);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .faq-question {
+            background: rgba(255,215,0,0.2);
+            padding: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #FFD700;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255,215,0,0.3);
+        }
+
+        .faq-answer {
+            padding: 20px;
+            display: none;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(45deg, #8B4513, #DAA520);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            margin-bottom: 30px;
+        }
+
+        .footer-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .footer-subtitle {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .play-now-btn {
+            background: linear-gradient(45deg, #FF6B35, #FF4500);
+            color: white;
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255,107,53,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .play-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.5);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 20px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.3);
+            }
+            to {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 30px rgba(255,215,0,0.6);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">⚡ Gold Rush Gus</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-to-play">How to Play</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>We really DIG this jewelry Jungle!</h1>
+                <p class="hero-subtitle">Join old Gus as he tries to strike it lucky in the legendary jungle city of riches</p>
+                <button class="cta-button">Get Digging</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">RTP</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">x2,500</div>
+                    <div class="stat-label">Max Multiplier</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">High</div>
+                    <div class="stat-label">Volatility</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Adventure Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎰</div>
+                    <h3 class="feature-title">Free Spins</h3>
+                    <p class="feature-description">Landing three Free Spin symbols unlocks up to 15 free spins. Plus, you can retrigger more free spins during this round!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗝️</div>
+                    <h3 class="feature-title">Treasure Chest</h3>
+                    <p class="feature-description">Land Key symbols to unlock the Treasure Chest feature with instant cash prizes, progressive jackpots, and coin gamble games.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🃏</div>
+                    <h3 class="feature-title">Wild Symbols</h3>
+                    <p class="feature-description">Wild symbols can replace any regular symbol to help complete winning combinations, giving you more chances to hit those paylines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section id="how-to-play" class="how-to-play">
+        <div class="container">
+            <h2 class="section-title">How to Play</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Set Your Bet</h3>
+                    <p>Use the "Bet Amount" button to adjust your stake.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Spin the Reels</h3>
+                    <p>Hit the pickaxe spin button to get started.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Auto Play</h3>
+                    <p>Use Auto Play to set the number of spins automatically.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Play Responsibly</h3>
+                    <p>Set a time limit for your session to keep the fun in check.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">What is the RTP rate of Gold Rush Gus?</div>
+                <div class="faq-answer">This game has an RTP of 97%, which is higher than average for similar games.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Does the game have a free spins bonus?</div>
+                <div class="faq-answer">Yes! Land three Free Spin symbols to trigger up to 15 free spins, with the chance to retrigger during the round.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What's the highest-paying symbol?</div>
+                <div class="faq-answer">The Wild symbol is the top payer, offering up to 200x your stake when you land a full set.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h2 class="footer-title">Ready to join Gus and unearth some treasures?</h2>
+                <p class="footer-subtitle">Spin the reels of Gold Rush Gus and the City of Riches now!</p>
+                <button class="play-now-btn">Play Now</button>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Gold Rush Gus. All rights reserved. Play responsibly.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isOpen = answer.style.display === 'block';
+                
+                // Close all other answers
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.style.display = 'none';
+                });
+                
+                // Toggle current answer
+                answer.style.display = isOpen ? 'none' : 'block';
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to stats cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .feature-card, .step').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Button click handlers
+        document.querySelectorAll('.cta-button, .play-now-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Ready to start your adventure! 🎰⚡');
+            });
+        });
+    </script>
+</body>
+</html>
