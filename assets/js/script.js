@@ -164,7 +164,7 @@ contactForm.addEventListener('submit', function(e) {
     // Create mailto link
     const subject = encodeURIComponent(`Contact from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const mailtoLink = `mailto:contact@smartluckgames.com?subject=${subject}&body=${body}`;
+    const mailtoLink = `mailto:Chennhaiboo@gmail.com?subject=${subject}&body=${body}`;
     
     // Try to open email client
     try {
